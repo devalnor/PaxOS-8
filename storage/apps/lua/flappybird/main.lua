@@ -1,9 +1,21 @@
+--[[
+  Flappy Bird
+  Auteur: @devalnor
+  Date: 2023-12-7
+  Licence: MIT
+]]--
+
 p = require('paxolib')
 
-
+--- Configuration ---
+maxFps = 5 -- Nombre de frames par seconde max
+gravity = 7 -- Gravité du jeu
+scrollingSpeed = 10 -- Vitesse de défilement du jeu
+birdJump = 5 -- Force du saut du bird
 marginHack = -16 -- Hack qui fixe la marge de la fenêtre, remettre à 0 quand ce sera fixé dans paxos
+---
+
 running = false
-gravity = 2.4
 incY = gravity
 initialPosX = 50
 initialPosY = 170
@@ -47,10 +59,10 @@ function update()
   
   if running then
     birdY = birdY + incY;
-    cameraX=cameraX+1;
+    cameraX=cameraX+scrollingSpeed;
 
     if (incY < gravity) then
-      incY = incY + 0.1
+      incY = incY + math.ceil(gravity/10)
     end
 
     if (birdY < frameY-50 or birdY > frameY+limitY-10) then
@@ -109,7 +121,7 @@ function run()
   local initialX = 220 -- Position x initiale pour le premier tuyau
 
   for i = 1, 20 do
-    table.insert(pipes, Pipe:new(initialX + (i - 1) * pipeSpacing,  math.random(200,300), 200))
+    table.insert(pipes, Pipe:new(initialX + (i - 1) * pipeSpacing,  math.random(200,300+i*2) - (i*5), 200))
   end
 
   base = p.image(window, "base-long.png", 100, 374, 673, 100)
@@ -122,11 +134,12 @@ function run()
       start()
       return
     else 
-      incY= -4
+      incY= -birdJump
       return
     end
   end)
+  local updateInterval = math.ceil(1000 / maxFps)
 
-  p.setInterval(function() update() end, 10)
+  p.setInterval(function() update() end, updateInterval)
   p.setWindow(window)
 end
