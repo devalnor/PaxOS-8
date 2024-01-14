@@ -1,6 +1,8 @@
 #ifndef LUA_HPP
 #define LUA_HPP
 
+#include "lua2.hpp"
+
 #ifdef ESP32
     #include <Arduino.h>
     #include "soc/rtc_wdt.h"
@@ -112,8 +114,8 @@ class LuaInterpreter {
         static int getY(lua_State* L);
         static int getWidth(lua_State* L);
         static int getHeight(lua_State* L);
-        static int setVerticalAlignement(lua_State* L);
-        static int setHorizontalAlignement(lua_State* L);
+        static int setVerticalAlignment(lua_State* L);
+        static int setHorizontalAlignment(lua_State* L);
         static int setColor(lua_State* L);
         static int isFocused(lua_State* L);
 
@@ -158,8 +160,8 @@ static const luaL_Reg gui_common_binds[] = {
     {"getText",    LuaInterpreter::getText},
     {"setFontSize",LuaInterpreter::setFontSize},
     {"isFocused",  LuaInterpreter::isFocused},
-    {"setVerticalAlignement",   LuaInterpreter::setVerticalAlignement},
-    {"setHorizontalAlignement", LuaInterpreter::setHorizontalAlignement},
+    {"setVerticalAlignment",   LuaInterpreter::setVerticalAlignment},
+    {"setHorizontalAlignment", LuaInterpreter::setHorizontalAlignment},
     {NULL, NULL}
 };
 

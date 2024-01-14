@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <string>
 
-void Calcul::launch()
+void Calcul::execute()
 {
     buildGui();
 }
@@ -15,8 +15,6 @@ void Calcul::launch()
 void Calcul::buildGui()
 {
     Window window("");
-    window.setMarginX(0);
-    window.setMarginY(0);
     window.verticalSlide=false;
 
     std::string keys[] = {"^", "+/-", "%", "/", "7", "8", "9", "*", "4", "5", "6", "-", "1", "2", "3", "+", "0", ".", "AC", "="};
@@ -104,7 +102,7 @@ void Calcul::buildGui()
     
             if(actualCalculLabel->getFontSize() != oldFontAL)
             {
-                actualCalculLabel->rendered = false;
+                actualCalculLabel->reloadAlone();
                 actualCalculLabel->updateAll();
             }
         }
@@ -124,7 +122,7 @@ void Calcul::buildGui()
             }
             if(oldCalculLabel->getFontSize() != oldFontOL)
             {
-                oldCalculLabel->rendered = false;
+                oldCalculLabel->reloadAlone();
                 oldCalculLabel->updateAll();
             }
         }
@@ -191,7 +189,7 @@ void Calcul::processExpression(std::string &expression)
     }
 }
 
-void Calcul::addChar(App *app, Gui* objectPrt, void* data)
+void Calcul::addChar(CApp* app, Gui* objectPrt, void* data)
 {
     std::string chr = reinterpret_cast<Label*>(objectPrt)->getText();
     Label* label = reinterpret_cast<Label*>(data);

@@ -1,11 +1,12 @@
 #include "message.hpp"
 
 #include "../contact/contact.hpp"
-#include "../../interface/interface.hpp"
+
+#include "../../widgets/gui.hpp"
 
 bool Message::notif = false;
 
-void Message::main()
+void Message::execute()
 {
     while(!home_button::isPressed())
     {
@@ -27,8 +28,6 @@ void Message::main()
         while(reload==false && !home_button::isPressed())
         {
             Window win("message");
-            win.setMarginX(0);
-            win.setMarginY(CONTROL_BAR_SIZE);
 
             //print("apps/message/" + number + ".txt");
 
@@ -109,7 +108,7 @@ void Message::main()
                     {
                         //print("too much messages, resizing...");
                         box->scroolY = - bull->getRelativeY() - bull->getHeight() + box->getHeight();
-                        box->rendered=false;
+                        box->reloadAlone();
                     }
                 }
 
